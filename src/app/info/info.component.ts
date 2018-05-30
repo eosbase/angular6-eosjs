@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EosService } from '../services/eos.service';
 
 @Component({
   selector: 'app-info',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./info.component.css']
 })
 export class InfoComponent implements OnInit {
+  data: any;
 
-  constructor() { }
+  constructor(private eosService: EosService) {
+  }
 
   ngOnInit() {
+    this.data = this.eosService.eos.getInfo({});
   }
 
 }
