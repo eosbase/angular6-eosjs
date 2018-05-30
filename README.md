@@ -17,6 +17,13 @@ screen -S nodeos -m /usr/local/bin/nodeos -e -p eosio \
 
 Note the last `--access-control-allow-origin "*"` which is necessary for the browser to fetch data from an alternate origin than the site itself.
 
+Install nodejs/npm from https://nodejs.org/en/download/
+
+Install angular globally with:
+```sh
+sudo npm install -g @angular/cli
+```
+
 ## Create a new project and install dependencies
 
 ```sh
