@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  blockchainUrl: '//127.0.0.1:8888'
+  blockchainUrl: '//172.31.0.31:8888'
 };
 
 /*

@@ -60,7 +60,7 @@ ng g s services/eos
 
 Modify `services/eos.service.ts` so it imports eosjs and the environment and exposes a class variable called eos that's populated by its constructor through eosjs using the environment blockchainUrl.
 
-## Create info component and use use the EosService in it
+## Create info component and use the EosService in it
 
 Create an `info` component:
 ```sh
