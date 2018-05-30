@@ -1,27 +1,73 @@
-# Angular6Eosjs
+# Learning Angular 6 with Eosjs
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.5.
+Trying to document what steps are taken to get an Angular 6 project running together with Eosjs.
 
-## Development server
+## Prerequisites:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Install Eos as described here: https://github.com/EOSIO/eos/wiki/Local-Environment#2-building-eosio
 
-## Code scaffolding
+I start it in a screen as follows:
+```sh
+screen -S nodeos -m /usr/local/bin/nodeos -e -p eosio \
+	--plugin eosio::chain_api_plugin \
+	--plugin eosio::history_api_plugin \
+	--http-server-address 0.0.0.0:8888 \
+	--access-control-allow-origin "*"
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Note the last `--access-control-allow-origin "*"` which is necessary for the browser to fetch data from an alternate origin than the site itself.
 
-## Build
+## Create a new project and install dependencies
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```sh
+ng new angular6-eosjs
+```
 
-## Running unit tests
+Enter project dir and install eosjs:
+```sh
+cd angular6-eosjs
+npm install eosjs
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Create workaround for missing stream
 
-## Running end-to-end tests
+Create postinstall patch for enabling `require('stream')` which is no longer available in Angular 6 and is still necessary for cipher-base and hash-base.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+See file `/patch.js` and addition of `postinstall` in `/packages.json`.
 
-## Further help
+Following applies the patch:
+```sh
+npm install
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Configure environment
+
+Add a blockchainUrl to the `environments/environment.ts`.
+
+## Create EosService
+
+Use ng generate service for this:
+```sh
+ng g s services/eos
+```
+
+Modify `services/eos.service.ts` so it imports eosjs and the environment and exposes a class variable called eos that's populated by its constructor through eosjs using the environment blockchainUrl.
+
+## Create info component and use use the EosService in it
+
+Create an `info` component:
+```sh
+ng g c info
+```
+
+Show it from the `app.component.html` with `<app-info></app-info>` and modify the `info.component.html` a bit.
+
+Edit `info.component`, import EosService from `../services/eos.service`, intialize eosService from its constructor and fill `this.data` in `ngOnInit`.
+
+Display the `{{data}}` in `info.component.html` through one-way data-binding.
+
+Add dependency for `angular2-prettyjson` and use it to pipe the data through in `info.component`.
+```sh
+npm install angular2-prettyjson --save
+```
+
