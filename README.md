@@ -2,6 +2,13 @@
 
 Trying to document what steps are taken to get an Angular 6 project running together with Eosjs.
 
+# Thanks
+
+* EOS: https://github.com/EOSIO/eos
+* Eosjs of course: https://github.com/EOSIO/eosjs
+* EOSTracker which is using Angular 5 with Eosjs: https://github.com/EOSEssentials/EOSTracker
+* A patch to fix the require('stream') in Angular 6: https://gist.github.com/niespodd/1fa82da6f8c901d1c33d2fcbb762947d
+
 ## Prerequisites:
 
 Install Eos as described here: https://github.com/EOSIO/eos/wiki/Local-Environment#2-building-eosio
